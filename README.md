@@ -1,4 +1,15 @@
-# Installation process
+# Spot development environment
+
+This is a template repository for Spot development. When used with VSCode and a container environment like Docker, this repo provides all the necessary components to interact with a Spot robot.
+
+## Getting started
+
+1. Clone this repository as a starting place for development.
+1. Set the git remote to a new repository.
+1. TBD
+1. Remote-Containers: Reopen in Container
+
+## Package installation process
 
 1. Install BD packages
 
