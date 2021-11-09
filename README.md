@@ -2,11 +2,22 @@
 
 This is a template repository for Spot development. When used with VSCode and a container environment like Docker, this repo provides all the necessary components to interact with a Spot robot.
 
+This project can then be deployed to Spot as-is. <https://dev.bostondynamics.com/docs/payload/docker_containers.html>
+
 ## Getting started
 
+VSCode and a container environment is required for this to work.
+
 1. Clone this repository as a starting place for development.
+
 1. Set the git remote to a new repository.
-1. TBD
+
+1. Install a container environment and VSCode extension
+
+    <https://code.visualstudio.com/docs/remote/containers#_installation>
+
+    <https://code.visualstudio.com/docs/remote/containers-tutorial#_install-the-extension>
+
 1. Remote-Containers: Reopen in Container
 
 ## Package installation process
