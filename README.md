@@ -1,8 +1,6 @@
 # Spot Localization Test
 
-This app will create a Printout and Spot vision frame,
-Spot odom frame, and frames of all fiducials in range to a
-csv in the working directory.
+This app will create a terminal printout of the Spot vision frame, Spot odom frame, and frames of all fiducials in range and output the data to a .csv in the working directory.
 
 First, build the docker image while in the app working directory:
 
