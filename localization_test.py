@@ -78,7 +78,7 @@ def main(argv):
             print("    x: " + str(odom_T_body.x))
             print("    y: " + str(odom_T_body.y))
             print("    z: " + str(odom_T_body.z))
-            print("    z: " + str(odom_T_body.rot))
+            print("    rot: " + str(odom_T_body.rot))
             print("")
 
 
@@ -86,10 +86,11 @@ def main(argv):
             print("    x: " + str(vision_T_body.x))
             print("    y: " + str(vision_T_body.y))
             print("    z: " + str(vision_T_body.z))
-            print("    z: " + str(vision_T_body.rot))
+            print("    rot: " + str(vision_T_body.rot))
 
             
             # Log robot position data
+            # Rotation data not currently logged in spreadsheet
             data_entry = {
                'bot_odom_x': odom_T_body.x,
                'bot_odom_y': odom_T_body.y,
@@ -132,6 +133,7 @@ def main(argv):
 
 
                 #Log fiducial position data
+                #Rotation data not currently logged
                 data_entry.update({
                   fiducial.name + '_odom_x': odom_T_body.x,
                   fiducial.name + '_odom_y': odom_T_body.y,
