@@ -4,7 +4,7 @@ This app will create a terminal printout of the Spot vision frame, Spot odom fra
 
 First, clone the files:
 
-
+```git clone https://github.com/ncurfman/localization_test.git```
 
 Then build the docker image while in the app root directory:
 
