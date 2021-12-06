@@ -147,6 +147,7 @@ def main(argv):
                 odomTagEuler = quat_to_eulerZYX(odom_T_fiducial.rot)
                 visionTagEuler = quat_to_eulerZYX(vision_T_fiducial.rot)
 
+
                 # Fidcucial position data printout
                 print("Odom " + fiducial.name + ":")
                 print("    x: "+ str(odom_T_fiducial.x))
@@ -162,9 +163,9 @@ def main(argv):
                 print("    x: "+ str(vision_T_fiducial.x))
                 print("    y: "+ str(vision_T_fiducial.y))
                 print("    z: "+ str(vision_T_fiducial.z))
-                print(f'    yaw:{odomVisionEuler[0]}')
-                print(f'    pitch:{odomVisionEuler[1]}')
-                print(f'    roll:{odomVisionEuler[2]}')
+                print(f'    yaw:{visionTagEuler[0]}')
+                print(f'    pitch:{visionTagEuler[1]}')
+                print(f'    roll:{visionTagEuler[2]}')
                 print('') 
 
 
@@ -179,9 +180,9 @@ def main(argv):
                   fiducial.name + '_vis_x': vision_T_body.x,
                   fiducial.name + '_vis_y': vision_T_body.y,
                   fiducial.name + '_vis_z': odom_T_body.z,
-                  fiducial.name + '_vis_yaw': odomVisionEuler[0],
-                  fiducial.name + '_vis_pitch': odomVisionEuler[1],
-                  fiducial.name + '_vis_roll': odomVisionEuler[2],
+                  fiducial.name + '_vis_yaw': visionTagEuler[0],
+                  fiducial.name + '_vis_pitch': visionTagEuler[1],
+                  fiducial.name + '_vis_roll': visionTagEuler[2],
                 })
          
 
