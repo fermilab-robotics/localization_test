@@ -2,15 +2,10 @@
 #11/18/2021
 
 
-""" Printout and log to .csv Spot vision frame, Spot odom frame, and
-    frames of all fiducials in range.
-
-    File output name has been modified to use an output folder for a
-    containerized application.
-
+""" 
+Printout and log to .csv Spot vision frame, Spot odom frame, and
+frames of all fiducials in range.
 """
-
-
 
 from __future__ import print_function
 import argparse
@@ -47,7 +42,6 @@ def create_csv_filename():
 def main(argv):
 
 
-    """An example using the API to list and get specific objects."""
     parser = argparse.ArgumentParser()
     bosdyn.client.util.add_common_arguments(parser)
 
@@ -120,7 +114,6 @@ def main(argv):
 
             
             # Log robot position data
-            # Rotation data not currently logged in spreadsheet
             data_entry = {
                'bot_odom_x': odom_T_body.x,
                'bot_odom_y': odom_T_body.y,
@@ -176,7 +169,6 @@ def main(argv):
 
 
                 #Log fiducial position data
-                #Rotation data not currently logged
                 data_entry.update({
                   fiducial.name + '_odom_x': odom_T_body.x,
                   fiducial.name + '_odom_y': odom_T_body.y,
