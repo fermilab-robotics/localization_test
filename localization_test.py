@@ -16,16 +16,14 @@ from bosdyn.client.math_helpers import SE3Pose, quat_to_eulerZYX
 from bosdyn.client.frame_helpers import *
 
 
-containerDebuginVS = False
-
 def is_docker():
     path = '/proc/self/cgroup'
     return (os.path.exists('/.dockerenv') or
             os.path.isfile(path) and any('docker' in line for line in open(path)))
 
 
-def create_csv_filename():
-    if is_docker() or containerDebuginVS:
+def create_csv_filename(containerDebuginVS):
+    if is_docker() and not containerDebuginVS:
         return f'/pos_out/localization_test_output_{time.strftime("%Y%m%d-%H%M%S")}.csv'
     return f'localization_test_output_{time.strftime("%Y%m%d-%H%M%S")}.csv'
 
@@ -34,7 +32,7 @@ def main(argv):
 
     parser = argparse.ArgumentParser()
     bosdyn.client.util.add_common_arguments(parser)
-    parser.add_argument('-vs', dest='containerDebuginVS', action='store_true')
+    parser.add_argument('--vs', action='store_true', default=False)
     options = parser.parse_args(argv)
 
     # Create robot object with a world object client.
@@ -163,16 +161,38 @@ def main(argv):
             data_entry.update({'tag_time' : fiducialTime})
             data_list.append(data_entry)
                                
-            # Create csv with header then write latest row
-            keys = data_list[0].keys()
+            # Create csv with header
             if curr_fname == '':
-                curr_fname = create_csv_filename()
+                keys = data_list[0].keys()
+                curr_fname = create_csv_filename(options.vs)
                 with open(curr_fname, 'w') as output_file:
                     header_writer = csv.DictWriter(output_file, keys)
                     header_writer.writeheader()
+                    header_list=list(keys)
+                header_outdated = False
+
+            # Check the key list for newly detected april tags and update header    
+            else:
+                keys = data_list[-1].keys()
+                for key in keys:
+                    if key not in header_list:
+                        header_list.append(key)
+                        header_outdated = True
+                if header_outdated:
+                    os.rename(curr_fname, 'temp.csv')
+                    with open('temp.csv', 'r') as input_file, open(curr_fname, 'w') as output_file:
+                        reader = csv.DictReader(input_file)
+                        writer = csv.DictWriter(output_file, header_list)
+                        writer.writeheader()
+                        writer.writerows(reader)
+                    os.remove('temp.csv')
+                    header_outdated = False
+                    
+            # Write the latest row         
             with open(curr_fname, 'a') as output_file:
                 dict_writer = csv.DictWriter(output_file, keys)
                 dict_writer.writerow(data_list[-1])
+
 
     except KeyboardInterrupt:
         print("Caught KeyboardInterrupt, exiting")
