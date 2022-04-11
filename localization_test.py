@@ -24,8 +24,8 @@ def is_docker():
 
 def create_csv_filename(containerDebuginVS):
     if is_docker() and not containerDebuginVS:
-        return f'/pos_out/localization_test_output_{time.strftime("%Y%m%d-%H%M%S")}.csv'
-    return f'localization_test_output_{time.strftime("%Y%m%d-%H%M%S")}.csv'
+        return [f'/pos_out/localization_test_output_{time.strftime("%Y%m%d-%H%M%S")}.csv', '/pos_out/temp.csv']
+    return [f'localization_test_output_{time.strftime("%Y%m%d-%H%M%S")}.csv', 'temp.csv']
 
 
 def main(argv):
@@ -164,7 +164,7 @@ def main(argv):
             # Create csv with header
             if curr_fname == '':
                 keys = data_list[0].keys()
-                curr_fname = create_csv_filename(options.vs)
+                curr_fname, temp_fname = create_csv_filename(options.vs)
                 with open(curr_fname, 'w') as output_file:
                     header_writer = csv.DictWriter(output_file, keys)
                     header_writer.writeheader()
@@ -179,13 +179,13 @@ def main(argv):
                         header_list.append(key)
                         header_outdated = True
                 if header_outdated:
-                    os.rename(curr_fname, 'temp.csv')
-                    with open('temp.csv', 'r') as input_file, open(curr_fname, 'w') as output_file:
+                    os.rename(curr_fname, temp_fname)
+                    with open(temp_fname, 'r') as input_file, open(curr_fname, 'w') as output_file:
                         reader = csv.DictReader(input_file)
                         writer = csv.DictWriter(output_file, header_list)
                         writer.writeheader()
                         writer.writerows(reader)
-                    os.remove('temp.csv')
+                    os.remove(temp_fname)
                     header_outdated = False
                     
             # Write the latest row         
