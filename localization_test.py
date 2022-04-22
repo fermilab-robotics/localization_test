@@ -93,6 +93,7 @@ def main(argv):
             
             # Log robot position data
             data_entry = {
+               'bot_time' : robotPositionTime,
                'bot_odom_x': odom_T_body.x,
                'bot_odom_y': odom_T_body.y,
                'bot_odom_z': odom_T_body.z,
@@ -104,8 +105,7 @@ def main(argv):
                'bot_vis_z': vision_T_body.z,
                'bot_vis_yaw': visionBodyEuler[0],
                'bot_vis_pitch': visionBodyEuler[1],
-               'bot_vis_roll': visionBodyEuler[2],
-               'bot_time' : robotPositionTime
+               'bot_vis_roll': visionBodyEuler[2]
             }
 
             data_list.append(data_entry)
@@ -116,6 +116,9 @@ def main(argv):
             print("time: " + str(fiducialTime))
             print()
 
+            #Log fiducial time
+            data_entry.update({'tag_time' : fiducialTime})
+            
             for fiducial in fiducial_objects:
                 vision_T_fiducial = get_a_tform_b(fiducial.transforms_snapshot, VISION_FRAME_NAME, fiducial.apriltag_properties.frame_name_fiducial)
                 odom_T_fiducial = get_a_tform_b(fiducial.transforms_snapshot, ODOM_FRAME_NAME, fiducial.apriltag_properties.frame_name_fiducial)
@@ -155,10 +158,9 @@ def main(argv):
                   fiducial.name + '_vis_z': odom_T_body.z,
                   fiducial.name + '_vis_yaw': visionTagEuler[0],
                   fiducial.name + '_vis_pitch': visionTagEuler[1],
-                  fiducial.name + '_vis_roll': visionTagEuler[2],
+                  fiducial.name + '_vis_roll': visionTagEuler[2]
                 })
          
-            data_entry.update({'tag_time' : fiducialTime})
             data_list.append(data_entry)
                                
             # Create csv with header
@@ -190,7 +192,7 @@ def main(argv):
                     
             # Write the latest row         
             with open(curr_fname, 'a') as output_file:
-                dict_writer = csv.DictWriter(output_file, keys)
+                dict_writer = csv.DictWriter(output_file, header_list)
                 dict_writer.writerow(data_list[-1])
 
 
