@@ -9,8 +9,8 @@ deprecated==1.2.13
 grpcio==1.42.0
 idna==3.3; python_version >= '3'
 iperf3==0.1.11
+pillow==9.0.1
 numpy==1.22.0
-pillow==6.1.0
 protobuf==3.19.1
 pyjwt==2.4.0
 pyqt5-qt5==5.15.2
